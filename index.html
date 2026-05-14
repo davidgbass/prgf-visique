@@ -207,15 +207,19 @@ td.val .sub {
     padding: 0 0 32px;
   }
 
-  /* ── Mobile header ── */
-  .m-header {
-    background: var(--white);
-    border-bottom: 3px solid var(--blue);
-    padding: 16px 16px 12px;
+  /* ── Sticky top block (header + legend collent ensemble) ── */
+  .m-sticky-top {
     position: sticky;
     top: 0;
     z-index: 10;
     box-shadow: 0 2px 8px rgba(74,126,232,.12);
+  }
+
+  /* ── Mobile header ── */
+  .m-header {
+    background: var(--white);
+    border-bottom: 1px solid var(--lt-border);
+    padding: 16px 16px 12px;
   }
   .m-title {
     font-size: 17px;
@@ -256,10 +260,7 @@ td.val .sub {
     gap: 6px;
     padding: 10px 12px;
     background: var(--white);
-    border-bottom: 1px solid var(--lt-border);
-    position: sticky;
-    top: 106px;
-    z-index: 9;
+    border-bottom: 3px solid var(--blue);
   }
   .m-leg-item {
     text-align: center;
@@ -550,21 +551,22 @@ td.val .sub {
 <div class="mobile-view">
 <div class="m-wrap">
 
-  <div class="m-header">
-    <div class="m-title">
-      ENDORET<sup style="font-size:11px">®</sup> (prgf<sup style="font-size:11px">®</sup>)
-      &nbsp;—&nbsp;<span class="blue">Comparaison clinique</span>
+  <div class="m-sticky-top">
+    <div class="m-header">
+      <div class="m-title">
+        ENDORET<sup style="font-size:11px">®</sup> (prgf<sup style="font-size:11px">®</sup>)
+        &nbsp;—&nbsp;<span class="blue">Comparaison clinique</span>
+      </div>
+      <div class="m-subtitle">Sécheresse oculaire &amp; pathologies de la surface oculaire</div>
+      <div><span class="m-badge">APPROUVÉ SANTÉ CANADA</span></div>
+      <div class="m-clinic">Visique Bromont — Traitement PRGF disponible sur place</div>
+      <div class="m-attribution">Adaptation de la documentation officielle Endoret® (PRGF®)<br>réalisée par Dre Émilie Martel, OD</div>
     </div>
-    <div class="m-subtitle">Sécheresse oculaire &amp; pathologies de la surface oculaire</div>
-    <div><span class="m-badge">APPROUVÉ SANTÉ CANADA</span></div>
-    <div class="m-clinic">Visique Bromont — Traitement PRGF disponible sur place</div>
-    <div class="m-attribution">Adaptation de la documentation officielle Endoret® (PRGF®)<br>réalisée par Dre Émilie Martel, OD</div>
-  </div>
-
-  <div class="m-legend">
-    <div class="m-leg-item m-leg-gray">Sérum<br>autologue</div>
-    <div class="m-leg-item m-leg-gray">PRP</div>
-    <div class="m-leg-item m-leg-blue">PRGF<br>Endoret®</div>
+    <div class="m-legend">
+      <div class="m-leg-item m-leg-gray">Sérum<br>autologue</div>
+      <div class="m-leg-item m-leg-gray">PRP</div>
+      <div class="m-leg-item m-leg-blue">PRGF<br>Endoret®</div>
+    </div>
   </div>
 
   <div class="m-cards">
