@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PRGF Endoret — Visique Bromont</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+
+/* ══════════════════════════════════════════════════════════
+   VARIABLES COMMUNES
+══════════════════════════════════════════════════════════ */
+:root {
+  --blue:        #4A7EE8;
+  --blue-dark:   #2B5CC8;
+  --blue-light:  #EDF2FD;
+  --blue-mid:    #D0DFFA;
+  --dark:        #111111;
+  --mid-gray:    #555555;
+  --lt-border:   #CDD4E4;
+  --row-alt:     #F4F7FC;
+  --white:       #FFFFFF;
+  --green:       #2A6E47;
+  --red:         #A82B22;
+  --amber:       #9A6508;
+  --tag-bg:      #E6EFFD;
+  --tag-txt:     #2B5CC8;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--dark);
+  background: var(--white);
+  line-height: 1.38;
+}
+
+/* ══════════════════════════════════════════════════════════
+   DESKTOP / PRINT LAYOUT  (caché sur mobile)
+══════════════════════════════════════════════════════════ */
+.desktop-view {
+  display: block;
+  width: 279.4mm;
+  height: 215.9mm;
+}
+
+.mobile-view { display: none; }
+
+/* ── Sheet ── */
+.sheet {
+  width: 279.4mm;
+  height: 215.9mm;
+  padding: 6mm 8mm 5mm 8mm;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── Header ── */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 2.5px solid var(--blue);
+  padding-bottom: 4px;
+  margin-bottom: 4px;
+  flex-shrink: 0;
+}
+.header-left { display: flex; flex-direction: column; gap: 2px; }
+.doc-title {
+  font-size: 15px; font-weight: 700; color: var(--dark);
+  letter-spacing: -0.4px; line-height: 1.1;
+}
+.doc-title .blue { color: var(--blue); }
+.doc-subtitle { font-size: 9px; color: var(--mid-gray); font-weight: 400; }
+.header-right {
+  text-align: right; font-size: 9px; color: var(--mid-gray); line-height: 1.55;
+}
+.header-right strong { color: var(--dark); font-weight: 600; font-size: 9.5px; }
+.badge {
+  display: inline-block; background: var(--blue); color: var(--white);
+  font-size: 7px; font-weight: 700; padding: 2px 7px; border-radius: 2px;
+  letter-spacing: 0.7px; margin-top: 2px;
+}
+
+/* ── Table ── */
+.main-table {
+  width: 100%; border-collapse: collapse;
+  table-layout: fixed; flex: 1 0 auto;
+}
+.main-table colgroup col.col-crit  { width: 32%; }
+.main-table colgroup col.col-serum { width: 19%; }
+.main-table colgroup col.col-prp   { width: 21%; }
+.main-table colgroup col.col-prgf  { width: 28%; }
+
+.th-sang {
+  background: #3C3C3C; color: var(--white); text-align: center;
+  font-weight: 600; font-size: 7.5px; letter-spacing: 2.2px;
+  text-transform: uppercase; padding: 3.5px 6px; border: 1px solid #222;
+}
+.th-empty { background: var(--white); border: none; }
+.th-gray {
+  background: #787878; color: var(--white); text-align: center;
+  font-weight: 600; font-size: 9px; padding: 5px 4px;
+  border: 1px solid #606060; line-height: 1.3; vertical-align: middle;
+}
+.th-blue {
+  background: var(--blue); color: var(--white); text-align: center;
+  font-weight: 700; font-size: 9px; padding: 5px 6px;
+  border: 1px solid var(--blue-dark); line-height: 1.3; vertical-align: middle;
+}
+.main-table tbody tr td {
+  border: 1px solid var(--lt-border); padding: 3.5px 5px; vertical-align: middle;
+}
+.main-table tbody tr:nth-child(odd)  td          { background: var(--white); }
+.main-table tbody tr:nth-child(even) td          { background: var(--row-alt); }
+.main-table tbody tr:nth-child(odd)  td.prgf-col { background: var(--blue-light); }
+.main-table tbody tr:nth-child(even) td.prgf-col { background: var(--blue-mid); }
+
+td.criterion { font-size: 9px; line-height: 1.38; }
+td.criterion strong {
+  display: block; font-weight: 700; font-size: 9px;
+  color: var(--dark); margin-bottom: 1px;
+}
+td.criterion .desc {
+  display: block; font-weight: 400; font-size: 7.8px;
+  color: var(--mid-gray); line-height: 1.32;
+}
+td.val {
+  text-align: center; font-weight: 600; font-size: 9px;
+  vertical-align: middle; line-height: 1.35;
+}
+td.val.prgf-col { font-weight: 700; color: var(--blue-dark); }
+td.val.v-green  { color: var(--green); }
+td.val.v-red    { color: var(--red); }
+td.val.v-amber  { color: var(--amber); }
+td.val.v-dark   { color: var(--dark); }
+td.val .sub {
+  display: block; font-weight: 400; font-size: 7.2px;
+  color: var(--mid-gray); margin-top: 1px; line-height: 1.25;
+}
+
+/* ── Footer ── */
+.footer {
+  flex-shrink: 0; margin-top: 4px; padding-top: 3.5px;
+  border-top: 1.5px solid var(--blue);
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;
+}
+.refs { flex: 1; font-size: 7px; color: #9A9A9A; line-height: 1.6; }
+.refs strong {
+  font-size: 7.5px; color: var(--mid-gray); display: block;
+  margin-bottom: 1px; text-transform: uppercase; letter-spacing: 0.7px;
+}
+.footer-right {
+  flex-shrink: 0; min-width: 165px; text-align: right;
+  font-size: 9px; color: var(--mid-gray); line-height: 1.55;
+}
+.footer-right strong { color: var(--blue-dark); font-weight: 700; font-size: 9.5px; }
+.attribution { font-size: 7px; color: #BBBBBB; line-height: 1.5; margin-top: 2px; font-style: italic; }
+.endoret-sig { font-size: 8px; color: #AAAAAA; font-weight: 300; margin-top: 2px; }
+.endoret-sig b { font-weight: 600; color: #888; }
+
+/* ══════════════════════════════════════════════════════════
+   PRINT
+══════════════════════════════════════════════════════════ */
+@page { size: letter landscape; margin: 0; }
+
+@media print {
+  html, body { width: 279.4mm; height: 215.9mm; }
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .mobile-view { display: none !important; }
+  .desktop-view { display: block !important; }
+}
+
+/* ══════════════════════════════════════════════════════════
+   MOBILE LAYOUT  (≤ 900px)
+══════════════════════════════════════════════════════════ */
+@media screen and (max-width: 900px) {
+  body { background: #F0F4FA; }
+  .desktop-view { display: none; }
+  .mobile-view { display: block; }
+
+  /* ── App shell ── */
+  .m-wrap {
+    max-width: 540px;
+    margin: 0 auto;
+    padding: 0 0 32px;
+  }
+
+  /* ── Mobile header ── */
+  .m-header {
+    background: var(--white);
+    border-bottom: 3px solid var(--blue);
+    padding: 16px 16px 12px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(74,126,232,.12);
+  }
+  .m-title {
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.4px;
+    color: var(--dark);
+  }
+  .m-title .blue { color: var(--blue); }
+  .m-subtitle {
+    font-size: 11px;
+    color: var(--mid-gray);
+    margin-top: 3px;
+    line-height: 1.4;
+  }
+  .m-badge {
+    display: inline-block;
+    background: var(--blue);
+    color: var(--white);
+    font-size: 9px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 3px;
+    letter-spacing: 0.7px;
+    margin-top: 8px;
+  }
+  .m-clinic {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--blue-dark);
+    margin-top: 6px;
+  }
+
+  /* ── Column legend ── */
+  .m-legend {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+    padding: 10px 12px;
+    background: var(--white);
+    border-bottom: 1px solid var(--lt-border);
+    position: sticky;
+    top: 106px;
+    z-index: 9;
+  }
+  .m-leg-item {
+    text-align: center;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 5px 4px;
+    border-radius: 4px;
+    line-height: 1.3;
+  }
+  .m-leg-gray { background: #787878; color: #fff; }
+  .m-leg-blue { background: var(--blue); color: #fff; font-weight: 700; }
+
+  /* ── Cards ── */
+  .m-cards { padding: 10px 12px; display: flex; flex-direction: column; gap: 10px; }
+
+  .m-card {
+    background: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.08);
+    overflow: hidden;
+    border: 1px solid var(--lt-border);
+  }
+
+  .m-card-header {
+    padding: 10px 12px 8px;
+    border-bottom: 1px solid var(--lt-border);
+    background: var(--white);
+  }
+  .m-card-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1.25;
+  }
+  .m-card-desc {
+    font-size: 11px;
+    color: var(--mid-gray);
+    margin-top: 3px;
+    line-height: 1.45;
+  }
+
+  .m-card-vals {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .m-val {
+    padding: 9px 6px;
+    text-align: center;
+    font-size: 11.5px;
+    font-weight: 600;
+    line-height: 1.3;
+    border-right: 1px solid var(--lt-border);
+  }
+  .m-val:last-child { border-right: none; }
+  .m-val .m-sub {
+    display: block;
+    font-size: 9.5px;
+    font-weight: 400;
+    color: var(--mid-gray);
+    margin-top: 2px;
+    line-height: 1.25;
+  }
+
+  .m-val.prgf {
+    background: var(--blue-light);
+    font-weight: 700;
+    color: var(--blue-dark);
+  }
+  .m-val.v-green { color: var(--green); }
+  .m-val.v-red   { color: var(--red); }
+  .m-val.v-amber { color: var(--amber); }
+  .m-val.v-dark  { color: var(--dark); }
+
+  /* PRGF column gets its own row highlight */
+  .m-val.prgf.v-green { color: var(--green); background: #E2F4EB; }
+
+  /* ── Mobile footer ── */
+  .m-footer {
+    margin: 4px 12px 0;
+    padding: 12px;
+    background: var(--white);
+    border-radius: 8px;
+    border: 1px solid var(--lt-border);
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+  }
+  .m-refs-title {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    color: var(--mid-gray);
+    margin-bottom: 6px;
+  }
+  .m-refs-list {
+    font-size: 10px;
+    color: #9A9A9A;
+    line-height: 1.7;
+  }
+  .m-footer-clinic {
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--lt-border);
+    font-size: 11px;
+    color: var(--mid-gray);
+    text-align: center;
+    line-height: 1.55;
+  }
+  .m-footer-clinic strong { color: var(--blue-dark); font-size: 12px; }
+  .m-attribution { font-size: 10px; color: #BBBBBB; font-style: italic; margin-top: 2px; }
+  .m-endoret { font-size: 10px; color: #AAAAAA; margin-top: 2px; }
+  .m-endoret b { color: #888; font-weight: 600; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     DESKTOP / PRINT VIEW
+═══════════════════════════════════════════════════════════ -->
+<div class="desktop-view">
+<div class="sheet">
+
+  <div class="header">
+    <div class="header-left">
+      <div class="doc-title">
+        ENDORET<sup style="font-size:8px">®</sup> (prgf<sup style="font-size:8px">®</sup>)
+        &nbsp;—&nbsp;<span class="blue">Comparaison clinique des produits sanguins dérivés</span>
+      </div>
+      <div class="doc-subtitle">
+        Sécheresse oculaire &amp; pathologies de la surface oculaire &nbsp;·&nbsp; Visique Bromont
+      </div>
+    </div>
+    <div class="header-right">
+      <strong>Traitement PRGF Endoret® disponible sur place</strong><br>
+      Visique Bromont<br>
+      <span class="badge">APPROUVÉ SANTÉ CANADA</span>
+    </div>
+  </div>
+
+  <table class="main-table">
+    <colgroup>
+      <col class="col-crit">
+      <col class="col-serum">
+      <col class="col-prp">
+      <col class="col-prgf">
+    </colgroup>
+    <thead>
+      <tr>
+        <td class="th-empty"></td>
+        <td colspan="3" class="th-sang">SANG TOTAL</td>
+      </tr>
+      <tr>
+        <td class="th-empty"></td>
+        <td class="th-gray">Sérum autologue</td>
+        <td class="th-gray">Plasma riche en plaquettes (PRP)</td>
+        <td class="th-blue">PRGF — Plasma riche en facteurs de croissance &nbsp;ENDORET®</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="criterion">
+          <strong>Protocole standardisé</strong>
+          <span class="desc">Protocole breveté, strictement encadré et approuvé par Santé Canada. Résultats constants peu importe la clinique.</span>
+        </td>
+        <td class="val v-red">Non</td>
+        <td class="val v-red">Non</td>
+        <td class="val prgf-col v-green">Oui</td>
+      </tr>
+      <tr>
+        <td class="criterion">
+          <strong>Séparation du plasma à l'aide d'un anticoagulant</strong>
+          <span class="desc">Maintient une concentration élevée de plaquettes, indispensable à l'extraction des facteurs de croissance.</span>
+        </td>
+        <td class="val v-red">Non</td>
+        <td class="val v-green">Oui</td>
+        <td class="val prgf-col v-green">Oui</td>
+      </tr>
+      <tr>
+        <td class="criterion">
+          <strong>Variabilité attribuable à la dilution</strong>
+          <span class="desc">Le sérum autologue doit être dilué, réduisant les facteurs bénéfiques et produisant des résultats variables d'un patient à l'autre.</span>
+        </td>
+        <td class="val v-red">Oui</td>
+        <td class="val v-green">Non</td>
+        <td class="val prgf-col v-green">Non</td>
+      </tr>
+      <tr>
+        <td class="criterion">
+          <strong>Activation commandée des plaquettes</strong>
+          <span class="desc">Maximise la libération et la concentration des plaquettes dans le plasma avant l'instillation.</span>
+        </td>
+        <td class="val v-red">Non</td>
+        <td class="val v-red">Non</td>
+        <td class="val prgf-col v-green">Oui</td>
+      </tr>
+      <tr>
+        <td class="criterion">
+          <strong>Réchauffement à 37 °C</strong>
+          <span class="desc">Provoque l'ouverture des plaquettes et la libération complète des facteurs de croissance dans le plasma.</span>
+        </td>
+        <td class="val v-red">Non</td>
+        <td class="val v-red">Non</td>
+        <td class="val prgf-col v-green">Oui</td>
+      </tr>
+      <tr>
+        <td class="criterion">
+          <strong>Réchauffement à 56 °C</strong>
+          <span class="desc">Stoppe l'activité du complément et diminue les taux d'IgE. Étape renforcée si risque inflammatoire élevé.</span>
+        </td>
+        <td class="val v-red">Non</td>
+        <td class="val v-red">Non</td>
+        <td class="val prgf-col v-green">Oui</td>
+      </tr>
+      <tr>
+        <td class="criterion">
+          <strong>Absence de leucocytes *</strong>
+          <span class="desc">Les leucocytes aggravent la douleur et l'inflammation à la surface oculaire.</span>
+        </td>
+        <td class="val v-red">Oui <span class="sub">(présents)</span></td>
+        <td class="val v-amber">Variable <span class="sub">(peut-être)</span></td>
+        <td class="val prgf-col v-green">Non <span class="sub">(éliminés)</span></td>
+      </tr>
+      <tr>
+        <td class="criterion">
+          <strong>Absence garantie de facteurs inflammatoires</strong>
+          <span class="desc">Pour le PRP, la pureté est opérateur-dépendante : si le prélèvement effleure le buffy coat (couche de débris cellulaires entre plasma et globules rouges), des cytokines pro-inflammatoires contaminent le produit final. Aucune filtration post-centrifugation n'est effectuée.</span>
+        </td>
+        <td class="val v-red">Non</td>
+        <td class="val v-amber">Non garanti <span class="sub">(opérateur-dépendant)</span></td>
+        <td class="val prgf-col v-green">Oui</td>
+      </tr>
+      <tr>
+        <td class="criterion">
+          <strong>Tolérance à l'instillation</strong>
+          <span class="desc">Le sérum non dilué brûle à l'instillation (protéines inflammatoires). Seuil de tolérance : ~40 % ; concentration cliniquement confortable : ~30 %, ce qui réduit d'autant les facteurs bénéfiques.</span>
+        </td>
+        <td class="val v-red">Brûlure fréquente <span class="sub">conc. idéale ~30 %</span></td>
+        <td class="val v-amber">Variable</td>
+        <td class="val prgf-col v-green">Bien toléré</td>
+      </tr>
+      <tr>
+        <td class="criterion">
+          <strong>Biodisponibilité immédiate des facteurs de croissance</strong>
+          <span class="desc">Le PRP non activé requiert que le film lacrymal brise naturellement les plaquettes avant libération des facteurs — ce qui limite l'absorption. Le PRGF les livre déjà activés dès l'instillation.</span>
+        </td>
+        <td class="val v-red">Non</td>
+        <td class="val v-amber">Partielle <span class="sub">(bris naturel requis)</span></td>
+        <td class="val prgf-col v-green">100 %</td>
+      </tr>
+      <tr>
+        <td class="criterion">
+          <strong>Reproductibilité entre cliniques</strong>
+          <span class="desc">Protocole identique d'un établissement à l'autre — le patient reçoit le même produit peu importe où il est traité. Impossible à garantir avec le sérum autologue ou le PRP.</span>
+        </td>
+        <td class="val v-red">Non</td>
+        <td class="val v-red">Non</td>
+        <td class="val prgf-col v-green">Oui</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="footer">
+    <div class="refs">
+      <strong>Références</strong>
+      1. Filardo G et al. Platelet-rich plasma intra-articular injections. <em>Knee Surg Sports Traumatol Arthrosc.</em> 2012. &nbsp;|&nbsp;
+      2. Merayo-Lloves J et al. Safety and Efficacy of PRGF Eye Drops for Evaporative Dry Eye. <em>Ophthalmic Res.</em> 2016;56(2):68-73. &nbsp;|&nbsp;
+      3. Sanchez-Avila RM et al. PRGF-Endoret for Neurotrophic Keratitis stages 2–3. <em>Int Ophthalmol.</em> 2018;38(3):1193-1204. &nbsp;|&nbsp;
+      4. Freire V et al. Corneal wound healing — 3 blood derivatives. <em>Cornea.</em> 2014;33(6):614-20. &nbsp;|&nbsp;
+      5. Anitua E et al. PRGF vs AS and insulin in ocular surface cells. <em>Curr Eye Res.</em> 2023;48(5):456-464. &nbsp;|&nbsp;
+      6. Anitua E et al. Progress in PRGF use in ophthalmology. <em>Expert Opin Biol Ther.</em> 2021. &nbsp;|&nbsp;
+      7. Labtician Ophthalmics Inc. ENDORET® (PRGF®) Fact Sheet. Réf. LT-ENDO-FS100122F. &nbsp;|&nbsp;
+      8. Yelle B, OD. <em>Endoret — Maîtrise Clinique, Efficacité et Développement.</em> LabticianOphthalmics, YouTube, 22 avr. 2026. youtube.com/watch?t=2489&v=ljHJEZD_EKg
+    </div>
+    <div class="footer-right">
+      <strong>Visique Bromont</strong><br>
+      <div class="attribution">
+        Adaptation de la documentation officielle Endoret® (PRGF®)<br>
+        réalisée par Dre Émilie Martel, OD
+      </div>
+      <div class="endoret-sig"><b>endoret</b> (prgf) &nbsp;·&nbsp; Endogenous Regenerative Technology</div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     MOBILE VIEW
+═══════════════════════════════════════════════════════════ -->
+<div class="mobile-view">
+<div class="m-wrap">
+
+  <div class="m-header">
+    <div class="m-title">
+      ENDORET<sup style="font-size:11px">®</sup> (prgf<sup style="font-size:11px">®</sup>)
+      &nbsp;—&nbsp;<span class="blue">Comparaison clinique</span>
+    </div>
+    <div class="m-subtitle">Sécheresse oculaire &amp; pathologies de la surface oculaire</div>
+    <div class="m-clinic">Traitement PRGF disponible sur place — Visique Bromont</div>
+    <div><span class="m-badge">APPROUVÉ SANTÉ CANADA</span></div>
+  </div>
+
+  <div class="m-legend">
+    <div class="m-leg-item m-leg-gray">Sérum<br>autologue</div>
+    <div class="m-leg-item m-leg-gray">PRP</div>
+    <div class="m-leg-item m-leg-blue">PRGF<br>Endoret®</div>
+  </div>
+
+  <div class="m-cards">
+
+    <div class="m-card">
+      <div class="m-card-header">
+        <div class="m-card-title">Protocole standardisé</div>
+        <div class="m-card-desc">Protocole breveté, strictement encadré et approuvé par Santé Canada. Résultats constants peu importe la clinique.</div>
+      </div>
+      <div class="m-card-vals">
+        <div class="m-val v-red">Non</div>
+        <div class="m-val v-red">Non</div>
+        <div class="m-val prgf v-green">Oui</div>
+      </div>
+    </div>
+
+    <div class="m-card">
+      <div class="m-card-header">
+        <div class="m-card-title">Séparation du plasma à l'aide d'un anticoagulant</div>
+        <div class="m-card-desc">Maintient une concentration élevée de plaquettes, indispensable à l'extraction des facteurs de croissance.</div>
+      </div>
+      <div class="m-card-vals">
+        <div class="m-val v-red">Non</div>
+        <div class="m-val v-green">Oui</div>
+        <div class="m-val prgf v-green">Oui</div>
+      </div>
+    </div>
+
+    <div class="m-card">
+      <div class="m-card-header">
+        <div class="m-card-title">Variabilité attribuable à la dilution</div>
+        <div class="m-card-desc">Le sérum autologue doit être dilué, réduisant les facteurs bénéfiques et produisant des résultats variables d'un patient à l'autre.</div>
+      </div>
+      <div class="m-card-vals">
+        <div class="m-val v-red">Oui</div>
+        <div class="m-val v-green">Non</div>
+        <div class="m-val prgf v-green">Non</div>
+      </div>
+    </div>
+
+    <div class="m-card">
+      <div class="m-card-header">
+        <div class="m-card-title">Activation commandée des plaquettes</div>
+        <div class="m-card-desc">Maximise la libération et la concentration des plaquettes dans le plasma avant l'instillation.</div>
+      </div>
+      <div class="m-card-vals">
+        <div class="m-val v-red">Non</div>
+        <div class="m-val v-red">Non</div>
+        <div class="m-val prgf v-green">Oui</div>
+      </div>
+    </div>
+
+    <div class="m-card">
+      <div class="m-card-header">
+        <div class="m-card-title">Réchauffement à 37 °C</div>
+        <div class="m-card-desc">Provoque l'ouverture des plaquettes et la libération complète des facteurs de croissance dans le plasma.</div>
+      </div>
+      <div class="m-card-vals">
+        <div class="m-val v-red">Non</div>
+        <div class="m-val v-red">Non</div>
+        <div class="m-val prgf v-green">Oui</div>
+      </div>
+    </div>
+
+    <div class="m-card">
+      <div class="m-card-header">
+        <div class="m-card-title">Réchauffement à 56 °C</div>
+        <div class="m-card-desc">Stoppe l'activité du complément et diminue les taux d'IgE. Étape renforcée si risque inflammatoire élevé.</div>
+      </div>
+      <div class="m-card-vals">
+        <div class="m-val v-red">Non</div>
+        <div class="m-val v-red">Non</div>
+        <div class="m-val prgf v-green">Oui</div>
+      </div>
+    </div>
+
+    <div class="m-card">
+      <div class="m-card-header">
+        <div class="m-card-title">Absence de leucocytes</div>
+        <div class="m-card-desc">Les leucocytes aggravent la douleur et l'inflammation à la surface oculaire.</div>
+      </div>
+      <div class="m-card-vals">
+        <div class="m-val v-red">Oui<span class="m-sub">(présents)</span></div>
+        <div class="m-val v-amber">Variable<span class="m-sub">(peut-être)</span></div>
+        <div class="m-val prgf v-green">Non<span class="m-sub">(éliminés)</span></div>
+      </div>
+    </div>
+
+    <div class="m-card">
+      <div class="m-card-header">
+        <div class="m-card-title">Absence garantie de facteurs inflammatoires</div>
+        <div class="m-card-desc">Pour le PRP, la pureté est opérateur-dépendante : si le prélèvement effleure le buffy coat, des cytokines pro-inflammatoires contaminent le produit final.</div>
+      </div>
+      <div class="m-card-vals">
+        <div class="m-val v-red">Non</div>
+        <div class="m-val v-amber">Non garanti<span class="m-sub">(opérateur-dépendant)</span></div>
+        <div class="m-val prgf v-green">Oui</div>
+      </div>
+    </div>
+
+    <div class="m-card">
+      <div class="m-card-header">
+        <div class="m-card-title">Tolérance à l'instillation</div>
+        <div class="m-card-desc">Le sérum non dilué brûle à l'instillation. Concentration cliniquement confortable : ~30 %, ce qui réduit d'autant les facteurs bénéfiques.</div>
+      </div>
+      <div class="m-card-vals">
+        <div class="m-val v-red">Brûlure<span class="m-sub">fréquente</span></div>
+        <div class="m-val v-amber">Variable</div>
+        <div class="m-val prgf v-green">Bien toléré</div>
+      </div>
+    </div>
+
+    <div class="m-card">
+      <div class="m-card-header">
+        <div class="m-card-title">Biodisponibilité immédiate des facteurs de croissance</div>
+        <div class="m-card-desc">Le PRP non activé requiert que le film lacrymal brise naturellement les plaquettes avant libération des facteurs. Le PRGF les livre déjà activés dès l'instillation.</div>
+      </div>
+      <div class="m-card-vals">
+        <div class="m-val v-red">Non</div>
+        <div class="m-val v-amber">Partielle<span class="m-sub">(bris naturel requis)</span></div>
+        <div class="m-val prgf v-green">100 %</div>
+      </div>
+    </div>
+
+    <div class="m-card">
+      <div class="m-card-header">
+        <div class="m-card-title">Reproductibilité entre cliniques</div>
+        <div class="m-card-desc">Protocole identique d'un établissement à l'autre — le patient reçoit le même produit peu importe où il est traité.</div>
+      </div>
+      <div class="m-card-vals">
+        <div class="m-val v-red">Non</div>
+        <div class="m-val v-red">Non</div>
+        <div class="m-val prgf v-green">Oui</div>
+      </div>
+    </div>
+
+  </div><!-- /m-cards -->
+
+  <div class="m-footer">
+    <div class="m-refs-title">Références</div>
+    <div class="m-refs-list">
+      1. Filardo G et al. <em>Knee Surg Sports Traumatol Arthrosc.</em> 2012.<br>
+      2. Merayo-Lloves J et al. <em>Ophthalmic Res.</em> 2016;56(2):68-73.<br>
+      3. Sanchez-Avila RM et al. <em>Int Ophthalmol.</em> 2018;38(3):1193-1204.<br>
+      4. Freire V et al. <em>Cornea.</em> 2014;33(6):614-20.<br>
+      5. Anitua E et al. <em>Curr Eye Res.</em> 2023;48(5):456-464.<br>
+      6. Anitua E et al. <em>Expert Opin Biol Ther.</em> 2021.<br>
+      7. Labtician Ophthalmics Inc. ENDORET® Fact Sheet. Réf. LT-ENDO-FS100122F.<br>
+      8. Yelle B, OD. Endoret — Maîtrise Clinique. LabticianOphthalmics, YouTube, 22 avr. 2026.
+    </div>
+    <div class="m-footer-clinic">
+      <strong>Visique Bromont</strong><br>
+      <div class="m-attribution">Adaptation de la documentation officielle Endoret® (PRGF®)<br>réalisée par Dre Émilie Martel, OD</div>
+      <div class="m-endoret"><b>endoret</b> (prgf) · Endogenous Regenerative Technology</div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+</body>
+</html>
