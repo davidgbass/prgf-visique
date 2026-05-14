@@ -59,9 +59,9 @@ body {
 
 /* ── Header ── */
 .header {
-  display: grid;
-  grid-template-columns: 1fr auto auto;
-  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   gap: 16px;
   border-bottom: 2.5px solid var(--blue);
   padding-bottom: 5px;
@@ -76,36 +76,26 @@ body {
 .doc-title .blue { color: var(--blue); }
 .doc-subtitle { font-size: 9px; color: var(--mid-gray); font-weight: 400; margin-top: 1px; }
 
-.header-center {
-  text-align: center;
-  border-left: 1.5px solid var(--lt-border);
-  border-right: 1.5px solid var(--lt-border);
-  padding: 0 16px;
+.header-right {
+  text-align: right;
   font-size: 9px;
   color: var(--mid-gray);
   line-height: 1.6;
-  white-space: nowrap;
+  flex-shrink: 0;
 }
-.header-center strong {
+.header-right strong {
   display: block;
   font-size: 10px;
   font-weight: 700;
   color: var(--dark);
   margin-bottom: 1px;
 }
-.header-center .attribution-small {
+.attribution-small {
   font-size: 7.5px;
   color: #BBBBBB;
   font-style: italic;
   line-height: 1.4;
   margin-top: 2px;
-}
-
-.header-right {
-  text-align: center;
-  font-size: 9px;
-  color: var(--mid-gray);
-  line-height: 1.55;
 }
 .badge {
   display: inline-block; background: var(--blue); color: var(--white);
@@ -401,16 +391,12 @@ td.val .sub {
         &nbsp;—&nbsp;<span class="blue">Comparaison clinique des produits sanguins dérivés</span>
       </div>
       <div class="doc-subtitle">Sécheresse oculaire &amp; pathologies de la surface oculaire</div>
+      <span class="badge" style="margin-top:4px;">APPROUVÉ SANTÉ CANADA</span>
     </div>
-
-    <div class="header-center">
+    <div class="header-right">
       <strong>Visique Bromont</strong>
       Traitement PRGF Endoret® disponible sur place
       <div class="attribution-small">Adaptation de la documentation officielle Endoret® (PRGF®)<br>réalisée par Dre Émilie Martel, OD</div>
-    </div>
-
-    <div class="header-right">
-      <span class="badge">APPROUVÉ SANTÉ CANADA</span>
     </div>
   </div>
 
@@ -570,9 +556,9 @@ td.val .sub {
       &nbsp;—&nbsp;<span class="blue">Comparaison clinique</span>
     </div>
     <div class="m-subtitle">Sécheresse oculaire &amp; pathologies de la surface oculaire</div>
-    <div class="m-clinic">Traitement PRGF disponible sur place — Visique Bromont</div>
-    <div class="m-attribution">Adaptation de la documentation officielle Endoret® (PRGF®)<br>réalisée par Dre Émilie Martel, OD</div>
     <div><span class="m-badge">APPROUVÉ SANTÉ CANADA</span></div>
+    <div class="m-clinic">Visique Bromont — Traitement PRGF disponible sur place</div>
+    <div class="m-attribution">Adaptation de la documentation officielle Endoret® (PRGF®)<br>réalisée par Dre Émilie Martel, OD</div>
   </div>
 
   <div class="m-legend">
